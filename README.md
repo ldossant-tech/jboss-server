@@ -12,10 +12,10 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
 - `GET /api/db/version` → testa DataSource e retorna `select version()`
 - `GET /api/openapi` → JSON OpenAPI (para o Swagger UI)
 
-## Requisitos no servidor
-- JBoss EAP 7.x ou WildFly 26+ (modo standalone)
-- Java 11 ou 17
-- Driver PostgreSQL registrado como **módulo** e DataSource `java:/jdbc/AppDS` configurado
+  ## Requisitos no servidor
+  - WildFly 32+ ou JBoss EAP 8 (Jakarta EE 10)
+  - Java 11 ou 17
+  - Driver PostgreSQL registrado como **módulo** e DataSource `java:/jdbc/AppDS` configurado
   (pode ser via CLI — exemplo no seu ambiente atual)
 
 ## Passo a passo para executar
