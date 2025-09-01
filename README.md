@@ -42,7 +42,7 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
 4. **Configure o driver PostgreSQL e a DataSource**  
    Entre no CLI e execute os comandos a seguir (ajuste `HOST`, `DB`, `USUARIO` e `SENHA`):
    ```bash
-   $JBOSS_HOME/bin/jboss-cli.sh
+   /opt/jboss/wildfly/bin/jboss-cli.sh
    [disconnected /] connect
    [standalone@localhost:9990 /] /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
    [standalone@localhost:9990 /] /subsystem=datasources/data-source=AppDS:add(jndi-name=java:/jdbc/AppDS,driver-name=postgresql,connection-url=jdbc:postgresql://HOST/DB,user-name=USUARIO,password=SENHA)
@@ -51,14 +51,14 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
 
 5. **Inicie o servidor**  
    ```bash
-   $JBOSS_HOME/bin/standalone.sh &
+   /opt/jboss/wildfly/bin/standalone.sh &
    ```
 
 6. **Faça o deploy do WAR**  
    ```bash
-   cp target/jboss-api-swagger-pg.war $JBOSS_HOME/standalone/deployments/
-   # ou via CLI:
-   $JBOSS_HOME/bin/jboss-cli.sh --connect --command="deploy target/jboss-api-swagger-pg.war --force"
+   cp target/jboss-api-swagger-pg.war /opt/jboss/wildfly/standalone/deployments/
+   # ou
+   /opt/jboss/wildfly/bin/jboss-cli.sh --connect --command="deploy target/jboss-api-swagger-pg.war --force"
    ```
 
 7. **Acesse a aplicação**  
