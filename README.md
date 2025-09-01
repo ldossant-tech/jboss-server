@@ -53,15 +53,20 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
    ```bash
    sudo /opt/jboss/wildfly/bin/standalone.sh &
    ```
-
-6. **Faça o deploy do WAR**  
+   *Se as portas estiverem em uso, execute:*
+   ```bash
+    sudo lsof -nP -iTCP:8080 -sTCP:LISTEN
+    sudo lsof -nP -iTCP:9990 -sTCP:LISTEN
+    sudo kill <PID>
+   ```
+7. **Faça o deploy do WAR**  
    ```bash
    sudo cp target/jboss-api-swagger-pg.war /opt/jboss/wildfly/standalone/deployments/
    # ou
    /opt/jboss/wildfly/bin/jboss-cli.sh --connect --command="deploy target/jboss-api-swagger-pg.war --force"
    ```
 
-7. **Acesse a aplicação**  
+8. **Acesse a aplicação**  
    Endpoints disponíveis estão listados na seção [Acessos](#acessos).
 
 ## Build
