@@ -55,11 +55,13 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
    (ajuste `HOST`, `DB`, `USUARIO` e `SENHA`). Se aparecer
    `WFLYPRT0053: Could not connect` significa que o servidor não está ativo:
    ```bash
-   sudo /opt/jboss/wildfly/bin/jboss-cli.sh
-   [disconnected /] connect
-   [standalone@localhost:9990 /] /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
-   [standalone@localhost:9990 /] /subsystem=datasources/data-source=AppDS:add(jndi-name=java:/jdbc/AppDS,driver-name=postgresql,connection-url=jdbc:postgresql://HOST/DB,user-name=USUARIO,password=SENHA)
-   [standalone@localhost:9990 /] exit
+    # Substitua DBNAME / DBUSER / DBPASS e ajuste host/porta conforme seu cenário
+    /opt/jboss/wildfly/bin/jboss-cli.sh --connect --commands='
+    /subsystem=datasources/data-source=AppDS:write-attribute(name=connection-url,value="jdbc:postgresql://127.0.0.1:5432/DBNAME"),
+    /subsystem=datasources/data-source=AppDS:write-attribute(name=user-name,value="DBUSER"),
+    /subsystem=datasources/data-source=AppDS:write-attribute(name=password,value="DBPASS"),
+    :reload,
+    /subsystem=datasources/data-source=AppDS:test-connection-in-pool'
    ```
 
 6. **Faça o deploy do WAR**
