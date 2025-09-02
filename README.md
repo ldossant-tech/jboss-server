@@ -34,22 +34,12 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
    cd jboss-server
    ```
 
-3. **Compile o projeto**  
+3. **Compile o projeto**
    ```bash
    mvn -DskipTests package
    ```
 
-4. **Configure o driver PostgreSQL e a DataSource**  
-   Entre no CLI e execute os comandos a seguir (ajuste `HOST`, `DB`, `USUARIO` e `SENHA`):
-   ```bash
-   sudo /opt/jboss/wildfly/bin/jboss-cli.sh
-   [disconnected /] connect
-   [standalone@localhost:9990 /] /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
-   [standalone@localhost:9990 /] /subsystem=datasources/data-source=AppDS:add(jndi-name=java:/jdbc/AppDS,driver-name=postgresql,connection-url=jdbc:postgresql://HOST/DB,user-name=USUARIO,password=SENHA)
-   [standalone@localhost:9990 /] exit
-   ```
-
-5. **Inicie o servidor**  
+4. **Inicie o servidor**
    ```bash
    sudo /opt/jboss/wildfly/bin/standalone.sh &
    ```
@@ -59,14 +49,27 @@ API JAX‑RS (WAR) para rodar em **JBoss EAP / WildFly** (sem container), com:
     sudo lsof -nP -iTCP:9990 -sTCP:LISTEN
     sudo kill <PID>
    ```
-7. **Faça o deploy do WAR**  
+
+5. **Configure o driver PostgreSQL e a DataSource**
+   Com o servidor em execução, entre no CLI e execute os comandos a seguir
+   (ajuste `HOST`, `DB`, `USUARIO` e `SENHA`). Se aparecer
+   `WFLYPRT0053: Could not connect` significa que o servidor não está ativo:
+   ```bash
+   sudo /opt/jboss/wildfly/bin/jboss-cli.sh
+   [disconnected /] connect
+   [standalone@localhost:9990 /] /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+   [standalone@localhost:9990 /] /subsystem=datasources/data-source=AppDS:add(jndi-name=java:/jdbc/AppDS,driver-name=postgresql,connection-url=jdbc:postgresql://HOST/DB,user-name=USUARIO,password=SENHA)
+   [standalone@localhost:9990 /] exit
+   ```
+
+6. **Faça o deploy do WAR**
    ```bash
    sudo cp target/jboss-api-swagger-pg.war /opt/jboss/wildfly/standalone/deployments/
    # ou
    /opt/jboss/wildfly/bin/jboss-cli.sh --connect --command="deploy target/jboss-api-swagger-pg.war --force"
    ```
 
-8. **Acesse a aplicação**  
+7. **Acesse a aplicação**
    Endpoints disponíveis estão listados na seção [Acessos](#acessos).
 
 ## Build
